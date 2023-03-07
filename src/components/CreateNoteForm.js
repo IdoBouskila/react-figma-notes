@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMode } from '../context/ModeProvider';
+import { useMode } from '../contexts/ModeProvider';
 
 const CreateNoteForm = ({ pendingNote, setPendingNote, setNoteList }) => {
     const { url } = useMode();

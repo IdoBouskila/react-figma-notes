@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMode } from '../context/ModeProvider';
+import { useMode } from '../contexts/ModeProvider';
 
 const Header = () => {
     const { toggleEditMode, setUrl } = useMode();

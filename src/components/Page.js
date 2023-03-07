@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useMode } from '../context/ModeProvider';
+import { useMode } from '../contexts/ModeProvider';
 import CreateNoteForm from './CreateNoteForm';
 import Note from './Note';
 
