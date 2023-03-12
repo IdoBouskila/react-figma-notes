@@ -10,6 +10,7 @@
     "immer": "^9.0.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
     "use-immer": "^0.8.1",
     "uuid": "^9.0.0",
