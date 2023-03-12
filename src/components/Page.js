@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { useMode } from '../contexts/ModeProvider';
+import { useSettings } from '../contexts/SettingsProvider';
+import { useNote } from '../hooks/useNote';
 import CreateNoteForm from './CreateNoteForm';
 import Note from './Note';
 
 const Page = () => {
     const pageRef = useRef(null);
-    const { url, editMode } = useMode();
-    const [ noteList, setNoteList] = useState({});
+    const { url, editMode } = useSettings();
+    const { notes, dispatch } = useNote();
+
     const [pendingNote, setPendingNote] = useState(null);
 
     const handleOverlayClick = (e) => {
@@ -16,12 +18,12 @@ const Page = () => {
         {
             coords: {
                 x: {
-                    size: (e.clientX / window.innerWidth) * 100 + 2,
+                    size: (e.clientX / window.innerWidth) * 100,
                     unit: 'vw'
                 },
                 y: {
-                    size: e.clientY - bounds.top,
-                    unit: 'px'
+                    size: ((e.clientY - bounds.top - 27) / window.innerHeight) * 100,
+                    unit: 'vh'
                 }
             }
         });
@@ -38,19 +40,23 @@ const Page = () => {
                     {
                         pendingNote &&
                             <CreateNoteForm
+                            noteDispatch={ dispatch }
                             pendingNote={ pendingNote }
                             setPendingNote={ setPendingNote }
-                            setNoteList={ setNoteList }
                             />
                     }
                 </>
                 
             }
             {
-                noteList[url] &&
-                    Object.keys(noteList[url]).map((key) => {
-                        return <Note noteDetails={ noteList[url][key] }/>
-                    })
+                notes[url] &&
+                    Object.keys(notes[url]).map((key) => {
+                        return <Note
+                                key={ notes[url][key].id }
+                                noteDetails={ notes[url][key] }
+                                noteDispatch={ dispatch }
+                                />
+                })
             }
         </div>
     );

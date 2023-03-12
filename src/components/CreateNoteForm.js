@@ -1,32 +1,22 @@
 import React from 'react';
-import { useMode } from '../contexts/ModeProvider';
 
-const CreateNoteForm = ({ pendingNote, setPendingNote, setNoteList }) => {
-    const { url } = useMode();
+const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
     const { coords } = pendingNote;
 
     const handleNoteSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
 
-        setNoteList(prev => {
-            return {
-                ...prev,
-                [url]: [
-                    ...prev[url] || [],
-                    {
-                        coords,
-                        comments: [
-                            {
-                                text: data.get('message'),
-                                time: Date.now()
-                            }
-                        ]
-                    }
-                ]
+        noteDispatch({
+            type: 'note_added',
+            payload: {
+                coords,
+                text: data.get('text')
             }
-        })
+        });
 
+        data.delete('text');
+        
         setPendingNote(null);
     }
 
@@ -36,8 +26,12 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, setNoteList }) => {
         style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
         onSubmit={ handleNoteSubmit }
         >
-            <input type="text" name="message"/>
-            <button>Create Note</button>
+            <span className='note pin'></span>
+
+            <div className="form-buttons">
+                <input type="text" name="text"/>
+                <button>Create Note</button>
+            </div>
         </form>
     );
 };
