@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Popover from "@radix-ui/react-popover";
 
 const Note = ({ noteDetails, noteDispatch }) => {
     const { id, coords, comments } = noteDetails;
@@ -20,33 +21,41 @@ const Note = ({ noteDetails, noteDispatch }) => {
     }
 
     return (
-        <div className='note' style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}>
-            {
-                comments.map((comment) => {
-                    const { text, time } = comment;
+        <Popover.Root>
+            <Popover.Trigger
+            className="note pin"
+            style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
+            >
+            </Popover.Trigger>
+                <Popover.Portal>
+                    <Popover.Content className="PopoverContent" sideOffset={0}>
+                    {
+                        comments.map((comment) => {
+                            const { text, time } = comment;
 
-                    return (
-                        <div className='comment-container' key={ comment.id }>
-                            <div className='comment-header'>
-                                <img src="https://i.pravatar.cc/300" alt="" />
-                                <strong>You</strong>
-                                <span className='date'>{ time }</span>
-                            </div>
-
-                            <p className='comment-content'>
+                            return (
+                            <div  className='comment-container' key={ comment.id }>
+                                <div className='comment-header'>
+                                    <img src="https://i.pravatar.cc/300" alt="" />
+                                    <strong>You</strong>
+                                    <span className='date'>{ time }</span>
+                                </div>
+                                
+                                <p className='comment-content'>
                                 { text }
-                            </p>
-                        
-                        </div>
-                    )
-                })
-            }
+                                </p>
+                            </div>
+                            )
+                        })
+                    }
 
-            <form action="" onSubmit={ handleCommentSubmit }>
-                <input type="text" name='text'/>
-                <button>Send comment</button>
-            </form>
-        </div>
+                    <form action="" onSubmit={ handleCommentSubmit }>
+                        <input type="text" name='text'/>
+                        <button>Send comment</button>
+                    </form>
+                    </Popover.Content>
+                </Popover.Portal>
+        </Popover.Root>
     );
 };
 
