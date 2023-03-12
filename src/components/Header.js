@@ -1,8 +1,8 @@
 import React from 'react';
-import { useMode } from '../contexts/ModeProvider';
+import { useSettings } from '../contexts/SettingsProvider';
 
 const Header = () => {
-    const { toggleEditMode, setUrl } = useMode();
+    const { toggleEditMode, setUrl } = useSettings();
 
     const handleUrlSubmit = (e) => {
         e.preventDefault();

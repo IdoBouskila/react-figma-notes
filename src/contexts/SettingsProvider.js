@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const ModeContext = createContext();
+const SettingsContext = createContext();
 
-export const useMode = () => {
-    return useContext(ModeContext);
+export const useSettings = () => {
+    return useContext(SettingsContext);
 }
 
-export const ModeProvider = ({ children }) => {
+export const SettingsProvider = ({ children }) => {
     const [editMode, setEditMode] = useState(false);
     const [url, setUrl] = useState('https://beta.reactjs.org/');
 
@@ -18,8 +18,8 @@ export const ModeProvider = ({ children }) => {
     };
 
     return (
-        <ModeContext.Provider value={ value }>
+        <SettingsContext.Provider value={ value }>
             {children}
-        </ModeContext.Provider>
+        </SettingsContext.Provider>
     );
 };
