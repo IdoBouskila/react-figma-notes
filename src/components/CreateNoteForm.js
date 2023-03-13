@@ -23,11 +23,11 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
 
     return (
         <form
-        className='note create-form'
+        className='create-note-form'
         style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
         onSubmit={ handleNoteSubmit }
         >
-            <div className='note pin'></div>
+            <div className='pin'></div>
             
             <div className="form-buttons">
                 <input type="text" name="text" placeholder='Add a comment'/>
