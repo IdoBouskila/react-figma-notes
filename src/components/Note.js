@@ -21,14 +21,14 @@ const Note = ({ noteDetails, noteDispatch }) => {
     }
 
     return (
-        <Popover.Root>
+        <Popover.Root defaultOpen={ true }>
             <Popover.Trigger
-            className="note pin"
+            className="note-pin pin"
             style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
             >
             </Popover.Trigger>
                 <Popover.Portal>
-                    <Popover.Content className="PopoverContent" sideOffset={0}>
+                    <Popover.Content className="PopoverContent" side='right' sideOffset={ 80 }>
                     {
                         comments.map((comment) => {
                             const { text, time } = comment;
