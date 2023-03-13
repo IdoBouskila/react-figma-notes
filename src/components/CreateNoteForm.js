@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 
 const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
     const { coords } = pendingNote;
@@ -22,15 +23,17 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
 
     return (
         <form
-        className='note'
+        className='note create-form'
         style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
         onSubmit={ handleNoteSubmit }
         >
-            <span className='note pin'></span>
-
+            <div className='note pin'></div>
+            
             <div className="form-buttons">
-                <input type="text" name="text"/>
-                <button>Create Note</button>
+                <input type="text" name="text" placeholder='Add a comment'/>
+                <button>
+                    <AiOutlineArrowUp fill='#fff' />
+                </button>
             </div>
         </form>
     );
