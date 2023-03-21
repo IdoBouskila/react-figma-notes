@@ -1,25 +1,21 @@
 import React from 'react';
-import { useSettings } from '../contexts/SettingsProvider';
+import * as Switch from '@radix-ui/react-switch';
+import { useMode } from '../contexts/ModeProvider';
 
 const Header = () => {
-    const { toggleEditMode, setUrl } = useSettings();
-
-    const handleUrlSubmit = (e) => {
-        e.preventDefault();
-
-        const data = new FormData(e.target);
-        setUrl(() => data.get('url'))
-    }
+    const { toggleEditMode } = useMode();
 
     return (
         <header>
-            <button onClick={ toggleEditMode }>Toggle Edit Mode</button>
-            
-            <form action="" onSubmit={ handleUrlSubmit }>
-                <input type="text" placeholder='enter url' name='url' />
-                <button>navigate to url</button>
-            </form>
-        </header>
+            <label htmlFor="note-mode">
+                Note Mode
+            </label>
+
+            <Switch.Root onClick={ toggleEditMode } className="toggle" id="note-mode">
+                <Switch.Thumb className="switch-thumb" />
+            </Switch.Root>
+      </header>
+    
     );
 };
 
