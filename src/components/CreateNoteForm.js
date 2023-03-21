@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+import * as Popover from '@radix-ui/react-popover';
 
 const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
     const { coords } = pendingNote;
@@ -22,20 +23,33 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
     }
 
     return (
-        <form
-        className='create-note-form'
-        style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
-        onSubmit={ handleNoteSubmit }
+        <Popover.Root 
+            defaultOpen={ true } 
+            onOpenChange={ (open) => ! open && setPendingNote(null) }
         >
-            <div className='pin'></div>
             
-            <div className="form-buttons">
-                <input type="text" name="text" placeholder='Add a comment'/>
-                <button>
-                    <AiOutlineArrowUp fill='#fff' />
-                </button>
-            </div>
-        </form>
+            <Popover.Trigger
+                className="note" 
+                style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }} 
+            />
+        
+            <Popover.Portal>
+                <Popover.Content>
+                    <form
+                    className='create-note-form'
+                    onSubmit={ handleNoteSubmit }
+                    >
+                        <div className='pin'></div>
+                        <div className="form-buttons">
+                            <input type="text" name="text" placeholder='Add a comment'/>
+                            <button>
+                                <AiOutlineArrowUp fill='#fff' />
+                            </button>
+                        </div>
+                    </form>
+                </Popover.Content>
+            </Popover.Portal>
+        </Popover.Root>
     );
 };
 
