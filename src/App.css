@@ -9,6 +9,7 @@
 
 button {
   all: unset;
+  cursor: pointer;
 }
 
 .toggle {
@@ -158,26 +159,25 @@ header {
 }
 
 .form-buttons input {
-  height: 70%;
-  width: 13.5vw;
+  height: 40px;
+  width: 100%;
   border: none;
   padding: 0 3em 0 1.2em;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 5px;
 }
 
-.form-buttons svg {
-  cursor: pointer;
-}
-
 .form-buttons button {
-  position: relative;
-  right: 35px;
-  height: 50%;
+  position: absolute;
+  display: grid;
+  place-content: center;
+  right: 4%;
+  width: 26px;
+  height: 26px;
   border: none;
   border-radius: 50%;
   background: #d9d9d9;
-  aspect-ratio: 1;
+  cursor: pointer;
 }
 
 .note-container {
@@ -257,6 +257,10 @@ header {
 .note-container form input {
   background: #f5f5f5;
   box-shadow: none;
+}
+
+.note-container .form-buttons button {
+  right: 9%;
 }
 
 .note-container form .form-buttons {
