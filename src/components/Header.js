@@ -3,7 +3,7 @@ import * as Switch from '@radix-ui/react-switch';
 import { useMode } from '../contexts/ModeProvider';
 
 const Header = () => {
-    const { toggleEditMode } = useMode();
+    const { toggleNoteMode } = useMode();
 
     return (
         <header>
@@ -11,7 +11,7 @@ const Header = () => {
                 Note Mode
             </label>
 
-            <Switch.Root onClick={ toggleEditMode } className="toggle" id="note-mode">
+            <Switch.Root onClick={ toggleNoteMode } className="toggle" id="note-mode">
                 <Switch.Thumb className="switch-thumb" />
             </Switch.Root>
       </header>

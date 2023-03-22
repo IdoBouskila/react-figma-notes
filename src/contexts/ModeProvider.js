@@ -7,11 +7,11 @@ export const useMode = () => {
 }
 
 export const ModeProvider = ({ children }) => {
-    const [editMode, setEditMode] = useState(false);
+    const [isNoteMode, setIsEditMode] = useState(false);
     
     const value = {
-        editMode,
-        toggleEditMode: () => setEditMode((prev) => ! prev),
+        isNoteMode,
+        toggleNoteMode: () => setIsEditMode((prev) => ! prev),
     };
 
     return (
