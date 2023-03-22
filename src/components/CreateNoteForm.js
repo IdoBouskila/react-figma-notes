@@ -7,6 +7,7 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
 
     const handleNoteSubmit = (e) => {
         e.preventDefault();
+        
         const data = new FormData(e.target);
 
         noteDispatch({
@@ -27,19 +28,25 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
             defaultOpen={ true } 
             onOpenChange={ (open) => ! open && setPendingNote(null) }
         >
-            
-            <Popover.Trigger
-                className="note" 
-                style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }} 
-            />
+            <Popover.Portal container={ document.querySelector(pendingNote.selector) }>
+                <Popover.Anchor
+                    className="note" 
+                    style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }} 
+                />
+            </Popover.Portal>
         
             <Popover.Portal>
-                <Popover.Content>
+                <Popover.Content
+                    side='right' 
+                    sideOffset={-2}
+                >
                     <form
+                    action="#"
                     className='create-note-form'
                     onSubmit={ handleNoteSubmit }
                     >
                         <div className='pin'></div>
+
                         <div className="form-buttons">
                             <input type="text" name="text" placeholder='Add a comment'/>
                             <button>
