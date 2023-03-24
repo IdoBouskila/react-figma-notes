@@ -1,8 +1,10 @@
 import React from 'react';
 import * as Popover from "@radix-ui/react-popover";
+import * as Portal from '@radix-ui/react-portal';
+import { AiOutlineArrowUp, AiOutlineCheckCircle, AiOutlineDelete, AiOutlineFullscreenExit } from 'react-icons/ai';
 
 const Note = ({ noteDetails, noteDispatch }) => {
-    const { id, coords, comments } = noteDetails;
+    const { id, coords, comments, target_selector } = noteDetails;
 
     const handleCommentSubmit = (e) => {
         e.preventDefault();
@@ -17,44 +19,75 @@ const Note = ({ noteDetails, noteDispatch }) => {
         });
         
         // reset form input
-        data.delete('text');    
+        data.delete('text');
     }
 
     return (
         <Popover.Root defaultOpen={ true }>
-            <Popover.Trigger
-            className="note-pin pin"
-            style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
+            <Portal.Root
+                className='note'
+                container={ document.querySelector(target_selector) }
+                style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }}
             >
-            </Popover.Trigger>
-                <Popover.Portal>
-                    <Popover.Content className="PopoverContent" side='right' sideOffset={ 80 }>
-                    {
-                        comments.map((comment) => {
-                            const { text, time } = comment;
+                <Popover.Trigger
+                    className="note-pin pin"
+                />
+            </Portal.Root>
 
-                            return (
-                            <div  className='comment-container' key={ comment.id }>
-                                <div className='comment-header'>
-                                    <img src="https://i.pravatar.cc/300" alt="" />
-                                    <strong>You</strong>
-                                    <span className='date'>{ time }</span>
+            <Popover.Portal>
+                <Popover.Content className="note-container" side='right' sideOffset={ 20 }>
+                    <div className="note-header">
+                        <div className="buttons">
+                            <a href="">
+                                <AiOutlineCheckCircle />
+                            </a>
+
+                            <a href="">
+                                <AiOutlineDelete />
+                            </a>
+
+                            <Popover.Close className='close-button' asChild>
+                                <a href="">
+                                    <AiOutlineFullscreenExit />
+                                </a>
+                            </Popover.Close>
+                        </div>
+                    </div>
+                    
+                    <div className="comments-container">
+                        {
+                            comments.map((comment) => {
+                                const { text, time } = comment;
+
+                                return (
+                                <div  className='comment' key={ comment.id }>
+                                    <div className='comment-header'>
+                                        <img src="https://i.pravatar.cc/300" alt="" />
+                                        <strong>Ido Bouskila</strong>
+                                        <span className='date'>25 minutes ago</span>
+                                    </div>
+                                    
+                                    <p className='comment-content'>
+                                        { text }
+                                    </p>
                                 </div>
-                                
-                                <p className='comment-content'>
-                                { text }
-                                </p>
-                            </div>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </div>
 
-                    <form action="" onSubmit={ handleCommentSubmit }>
-                        <input type="text" name='text'/>
-                        <button>Send comment</button>
-                    </form>
-                    </Popover.Content>
-                </Popover.Portal>
+                <form action="" onSubmit={ handleCommentSubmit }>
+                    <img src="https://i.pravatar.cc/300" alt="" />
+
+                    <div className="form-buttons">
+                        <input type="text" name="text" placeholder='Reply'/>
+                        <button>
+                            <AiOutlineArrowUp fill='#fff' />
+                        </button>
+                    </div>
+                </form>
+                </Popover.Content>
+            </Popover.Portal>
         </Popover.Root>
     );
 };
