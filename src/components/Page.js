@@ -1,28 +1,32 @@
-import React, { useRef, useState } from 'react';
-import { useSettings } from '../contexts/SettingsProvider';
+import React, { useState } from 'react';
+import { useMode } from '../contexts/ModeProvider';
 import { useNote } from '../hooks/useNote';
 import CreateNoteForm from './CreateNoteForm';
+import unique from 'unique-selector';
 import Note from './Note';
 
-const Page = () => {
-    const pageRef = useRef(null);
-    const { url, editMode } = useSettings();
+const Page = ({ children }) => {
+    const { isNoteMode } = useMode();
     const { notes, dispatch } = useNote();
-
     const [pendingNote, setPendingNote] = useState(null);
+    
+    const handlePageClick = (e) => {
+        e.preventDefault();
 
-    const handleOverlayClick = (e) => {
-        const bounds = pageRef.current.getBoundingClientRect();
-
+        const elementUniqueSelector = unique(e.target)
+        const bounds = e.target.getBoundingClientRect();
+        const pinSize = 30;
+        
         setPendingNote(
         {
+            target_selector: elementUniqueSelector,
             coords: {
                 x: {
-                    size: (e.clientX / window.innerWidth) * 100,
+                    size: (e.clientX - Math.round(bounds.left) - (pinSize / 2)) / ( window.innerWidth) * 100,
                     unit: 'vw'
                 },
                 y: {
-                    size: ((e.clientY - bounds.top - 27) / window.innerHeight) * 100,
+                    size: ((e.clientY - Math.round(bounds.top) - (pinSize) / 2) / window.innerHeight) * 100,    
                     unit: 'vh'
                 }
             }
@@ -30,35 +34,40 @@ const Page = () => {
     }
 
     return (
-        <div className='page-wrapper' ref={ pageRef }>
-            <iframe src={ url } frameBorder="0"></iframe>
-            {
-                editMode &&
-                <>
-                    <div className="overlay" onClick={ handleOverlayClick }></div>
+        <>
+            <div
+                className={isNoteMode ? 'page-wrapper note-mode' : 'page-wrapper' }
+                onClick={ handlePageClick }
+            >
+            { children }
+            </div>
 
-                    {
-                        pendingNote &&
-                            <CreateNoteForm
-                            noteDispatch={ dispatch }
-                            pendingNote={ pendingNote }
-                            setPendingNote={ setPendingNote }
-                            />
-                    }
-                </>
-                
-            }
             {
-                notes[url] &&
-                    Object.keys(notes[url]).map((key) => {
-                        return <Note
-                                key={ notes[url][key].id }
-                                noteDetails={ notes[url][key] }
-                                noteDispatch={ dispatch }
-                                />
+                    isNoteMode &&
+                    <>
+                        {
+                            pendingNote &&
+                                    <CreateNoteForm
+                                        noteDispatch={ dispatch }
+                                        pendingNote={ pendingNote }
+                                        setPendingNote={ setPendingNote }
+                                    />
+                        }
+                    </>
+            }
+
+            {
+                notes.map(note => {
+                    return (
+                        <Note
+                            key={ note.id}
+                            noteDetails={ note }
+                            noteDispatch={ dispatch }
+                        />
+                    )
                 })
             }
-        </div>
+        </>
     );
 };
 
