@@ -23,6 +23,15 @@ const Note = ({ noteDetails, noteDispatch }) => {
         data.delete('text');
     }
 
+    const handleDeleteNoteClick = () => {
+        noteDispatch({
+            type: 'note_deleted',
+            payload: {
+                id
+            }
+        })
+    }
+
     return (
         <Popover.Root defaultOpen={ true }>
             <Portal.Root
@@ -39,7 +48,7 @@ const Note = ({ noteDetails, noteDispatch }) => {
                 <Popover.Content className="note-container" side='right' sideOffset={ 20 }>
                     <div className="note-header">
                         <div className="buttons">
-                            <button className='note-icons-btn'>
+                            <button className='note-icons-btn' onClick={ handleDeleteNoteClick }>
                                 <AiOutlineCheckCircle />
                             </button>
 
