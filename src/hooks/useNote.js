@@ -67,7 +67,7 @@ export const useNote = () => {
 
                 })
 
-            case 'comment_deleted':
+            case 'note_deleted':
                 return notes.filter((note) => note.id !== payload.id);
 
             default: {
