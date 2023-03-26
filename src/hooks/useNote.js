@@ -1,65 +1,75 @@
-import React from 'react';
-import { useSettings } from '../contexts/SettingsProvider';
-import { v4 as uuidv4 } from 'uuid';
-import { useImmerReducer } from 'use-immer';
-import produce from 'immer';
-
+import React, { useReducer } from 'react';
+import { v4 as uniqueID } from 'uuid';
 
 export const useNote = () => {
-    const { url } = useSettings();
-    const [notes, dispatch] = useImmerReducer(notesReducer, {});
-
+    const [notes, dispatch] = useReducer(notesReducer, []);
+    
     function notesReducer(notes, action) {
         const { payload, type } = action;
 
         switch (type) {
             case 'note_added':
-                return {
+                return [
                     ...notes,
-                    [url]: [
-                        ...notes[url] || [],
                         {
-                            id: uuidv4(),
+                            id: uniqueID(),
                             coords: payload.coords,
+                            target_selector: payload.target_selector,
                             comments: [
                                 {
-                                    id: `${ uuidv4() }C`,
+                                    id: `${ uniqueID() }C`,
                                     text: payload.text,
                                     time: Date.now()
                                 }
                             ]
                         }
-                    ]
-                };
+                    ];
 
             case 'comment_added':
-                return produce(notes, draftNotes => {
-                    const selectedNote = draftNotes[url].find(note => note.id === payload.id);
+                return notes.map((note) => {
+                    if(note.id === payload.id) {
+                        return {
+                            ...note,
+                            comments: [
+                                ...note.comments,
+                                {
+                                    id: `${ uniqueID() }C`,
+                                    text: payload.text,
+                                    time: Date.now()
+                                }
 
-                    selectedNote.comments.push(
-                        {
-                            id: `${ uuidv4() }C`,
-                            text: payload.text,
-                            time: Date.now()
+                            ]
                         }
-                    )
+                    }
+
+                    return note;
                 });
 
             case 'comment_updated':
-                return produce(notes, draftNotes => {
-                    const selectedNote = draftNotes[url].find(note => note.id === payload.noteId);
-                    const selectedComment = selectedNote.comments(comment => comment.id === payload.commentId);
+                return notes.map((note) => {
+                    const { comments } = note;
+                    const commentFound = comments.find((comment) => comment.id === payload.id);
 
-                    selectedComment.text = payload.text;
-                });
+                    if(commentFound) {
+                        return {
+                            ...note,
+                            commments: comments.map((comment) => {
+                                if(comment.id === payload.id) {
+                                    return comment.text = payload.text
+                                }
+
+                                return comment;
+                            })
+                        }    
+                    }
+
+                    return note;
+
+                })
 
             case 'comment_deleted':
-                return produce(notes, draftNotes => {
-                    const selectedNote = draftNotes[url].find(note => note.id === payload.noteId);
+                return notes.filter((note) => note.id !== payload.id);
 
-                    selectedNote.comments.filter(comment => comment.id !== payload.commentId);
-                });
-    
             default: {
                 throw Error('Unknown action: ' + type);
             }
