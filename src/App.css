@@ -1,10 +1,20 @@
 * {
+  position: relative;
   margin: 0;
   padding: 0;
   outline: transparent;
   text-decoration: none;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
+  cursor: inherit;
+}
+
+nav a {
+  display: flex;
+}
+
+nav span {
+  display: block;
 }
 
 button {
@@ -12,10 +22,34 @@ button {
   cursor: pointer;
 }
 
+.page-wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+.page-wrapper.note-mode {
+  cursor: url('../public/note-cursor.png') 10 10, cell !important;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6vw;
+  padding: 1.9vw;
+  background: #243238;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+header label {
+  color: white;
+  font-size: 1rem;
+}
+
 .toggle {
   width: 42px;
   height: 25px;
-  background-color: rgba(0, 0, 0, 1);
+  background: #000;
   border-radius: 500px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -55,45 +89,10 @@ button {
   border-radius: 20px 20px 20px 0;
 }
 
-header label {
-  color: white;
-  font-size: 1rem;
-}
-
-.page-wrapper {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6vw;
-  padding: 1.9vw;
-  background: #243238;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-}
-
-.overlay {
+.note {
   position: absolute;
   inset: 0 auto auto 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0, 0.3);
-  cursor: url('../public/note-cursor.png') 10 10, cell;
-}
-
-.note-frame{
-  position: absolute;
-  inset: 0 auto auto 0;
-}
-
-.create-note-form {
-  height: 3.5em;
-  position: absolute;
-  inset: 0 auto auto 0;
+  z-index: 9999;
 }
 
 .create-note-form .pin {
@@ -147,7 +146,7 @@ header {
   background-size: contain;
 }
 
-.create-note-form .pin::before {
+.create-note-form.pin::before {
   background: #0d99ff;
 }
 
@@ -155,7 +154,6 @@ header {
   display: flex;
   height: 100%;
   align-items: center;
-  margin-left: 50px;
 }
 
 .form-buttons input {
@@ -185,6 +183,7 @@ header {
 
   display: flex;
   flex-direction: column;
+  width: 338px;
   gap: 1.5em;
   padding: 1.2em;
   border-radius: 3px;
@@ -244,6 +243,7 @@ header {
 
 .comment-content {
   padding-left: calc(var(---message-header-gap) + var(--img-size));
+  word-break: break-word;
   font-size: 0.8em;
 }
 
@@ -254,15 +254,99 @@ header {
   justify-content: left;
 }
 
+.comment-editable {
+  display: flex;
+  padding: 0 8px;
+  gap: 5px;
+  border: 1px solid #0d99ff;
+  border-radius: 6px;
+}
+
+.note-container .comment-editable > input{
+  all: unset;
+  word-break: break-word;
+  flex: 2;
+  font-size: 0.8em;
+}
+
+.comment-editable button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #0d99ff;
+}
+
+.comment-editable button > svg {
+  height: 100%;
+  width: 100%;
+  fill: #fff;
+}
+
 .note-container form input {
   background: #f5f5f5;
   box-shadow: none;
 }
 
-.note-container .form-buttons button {
-  right: 9%;
-}
-
 .note-container form .form-buttons {
   margin-left: var(---message-header-gap);
+}
+
+.edit-button-container {
+  display: flex;
+  justify-content: flex-end;
+  flex: 2;
+}
+
+.note-icons-btn {
+  aspect-ratio: 1;
+  padding: 6px;
+  border-radius: 2px;
+}
+
+.note-icons-btn:hover {
+  background: #f5f5f5;
+}
+
+.edit-button[data-state="open"] {
+  background-color: #0d99ff;
+}
+
+.edit-button[data-state="open"] svg {
+  color: #fff;
+}
+
+.edit-button[data-state="closed"]:hover {
+  background: #f5f5f5;
+}
+
+.edit-content {
+  position: relative;
+  color: #fff;
+  background: #000;
+  padding: 8px 0;
+  border-radius: 2px;
+  box-shadow: rgba(14, 18, 22, 0.35) 0px 10px 38px -10px, 
+              rgba(14, 18, 22, 0.2) 0px 10px 20px -15px;
+}
+
+.edit-content::before {
+  position: absolute;
+  content: '';
+  top: -5px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent; 
+  border-bottom: 5px solid #000;
+  transform: translateX(-50%);
+}
+
+.drop-down-item {
+  font-size: 12px;
+  padding: 4px 30px;
+}
+
+.drop-down-item:hover {
+  background: #0d99ff;
 }
