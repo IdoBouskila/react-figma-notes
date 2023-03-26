@@ -1,7 +1,8 @@
 import React from 'react';
 import * as Popover from "@radix-ui/react-popover";
 import * as Portal from '@radix-ui/react-portal';
-import { AiOutlineArrowUp, AiOutlineCheckCircle, AiOutlineDelete, AiOutlineFullscreenExit } from 'react-icons/ai';
+import { AiOutlineArrowUp, AiOutlineCheckCircle, AiOutlineClose } from 'react-icons/ai';
+import Comment from './Comment';
 
 const Note = ({ noteDetails, noteDispatch }) => {
     const { id, coords, comments, target_selector } = noteDetails;
@@ -38,18 +39,12 @@ const Note = ({ noteDetails, noteDispatch }) => {
                 <Popover.Content className="note-container" side='right' sideOffset={ 20 }>
                     <div className="note-header">
                         <div className="buttons">
-                            <a href="">
+                            <button className='note-icons-btn'>
                                 <AiOutlineCheckCircle />
-                            </a>
+                            </button>
 
-                            <a href="">
-                                <AiOutlineDelete />
-                            </a>
-
-                            <Popover.Close className='close-button' asChild>
-                                <a href="">
-                                    <AiOutlineFullscreenExit />
-                                </a>
+                            <Popover.Close className='note-icons-btn'>
+                                    <AiOutlineClose />
                             </Popover.Close>
                         </div>
                     </div>
@@ -57,20 +52,14 @@ const Note = ({ noteDetails, noteDispatch }) => {
                     <div className="comments-container">
                         {
                             comments.map((comment) => {
-                                const { text, time } = comment;
-
+                                const { id } = comment;
+                                
                                 return (
-                                <div  className='comment' key={ comment.id }>
-                                    <div className='comment-header'>
-                                        <img src="https://i.pravatar.cc/300" alt="" />
-                                        <strong>Ido Bouskila</strong>
-                                        <span className='date'>25 minutes ago</span>
-                                    </div>
-                                    
-                                    <p className='comment-content'>
-                                        { text }
-                                    </p>
-                                </div>
+                                    <Comment
+                                        key={ id }
+                                        commentDetails={ comment }
+                                        noteDispatch={ noteDispatch }
+                                    />
                                 )
                             })
                         }
