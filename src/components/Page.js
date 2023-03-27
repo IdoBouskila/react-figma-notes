@@ -13,7 +13,7 @@ const Page = ({ children }) => {
     const handlePageClick = (e) => {
         e.preventDefault();
 
-        const elementUniqueSelector = unique(e.target)
+        const elementUniqueSelector = unique(e.target);
         const bounds = e.target.getBoundingClientRect();
         const pinSize = 30;
         
@@ -22,11 +22,11 @@ const Page = ({ children }) => {
             target_selector: elementUniqueSelector,
             coords: {
                 x: {
-                    size: (e.clientX - Math.round(bounds.left) - (pinSize / 2)) / ( window.innerWidth) * 100,
+                    size: ((e.clientX - Math.round(bounds.left) - (pinSize / 2)) / window.innerWidth) * 100,
                     unit: 'vw'
                 },
                 y: {
-                    size: ((e.clientY - Math.round(bounds.top) - (pinSize) / 2) / window.innerHeight) * 100,    
+                    size: ((e.clientY - Math.round(bounds.top) - (pinSize / 2)) / window.innerHeight) * 100,    
                     unit: 'vh'
                 }
             }
@@ -36,24 +36,19 @@ const Page = ({ children }) => {
     return (
         <>
             <div
-                className={isNoteMode ? 'page-wrapper note-mode' : 'page-wrapper' }
+                className={ isNoteMode ? 'page-wrapper note-mode' : 'page-wrapper' }
                 onClick={ handlePageClick }
             >
-            { children }
+                { children }
             </div>
 
             {
-                    isNoteMode &&
-                    <>
-                        {
-                            pendingNote &&
-                                    <CreateNoteForm
-                                        noteDispatch={ dispatch }
-                                        pendingNote={ pendingNote }
-                                        setPendingNote={ setPendingNote }
-                                    />
-                        }
-                    </>
+                (isNoteMode && pendingNote) &&
+                    <CreateNoteForm
+                        noteDispatch={ dispatch }
+                        pendingNote={ pendingNote }
+                        setPendingNote={ setPendingNote }
+                    />
             }
 
             {
