@@ -1,57 +1,63 @@
 import React from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import * as Popover from '@radix-ui/react-popover';
-import * as Portal from '@radix-ui/react-portal'
+import * as Portal from '@radix-ui/react-portal';
 
 const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
-    const { target_selector, coords } = pendingNote;
+    const { targetSelector, coords } = pendingNote;
 
     const handleNoteSubmit = (e) => {
         e.preventDefault();
-        
+
         const data = new FormData(e.target);
 
         noteDispatch({
             type: 'note_added',
             payload: {
-                target_selector,
+                targetSelector,
                 coords,
-                text: data.get('text')
-            }
+                text: data.get('text'),
+            },
         });
 
         data.delete('text');
-        
+
         setPendingNote(null);
-    }
+    };
 
     return (
-        <Popover.Root 
-            open={ true }
-        >
+        <Popover.Root open={true}>
             <Portal.Root
                 className='note'
-                container={ document.querySelector(target_selector) }
+                container={document.querySelector(targetSelector)}
             >
                 <Popover.Trigger
-                    className="create-note-form pin"
-                    style={{ transform: `translate3d(${ coords.x.size + coords.x.unit}, ${ coords.y.size + coords.y.unit }, 0)` }} 
+                    className='create-note-form pin'
+                    style={{
+                        transform: `translate3d(${
+                            coords.x.size + coords.x.unit
+                        }, ${coords.y.size + coords.y.unit}, 0)`,
+                    }}
                 />
             </Portal.Root>
-        
+
             <Popover.Portal>
                 <Popover.Content
-                    onPointerDownOutside={ () => setPendingNote(null) }
-                    sideOffset={ 20 }
-                    side='right' 
+                    onPointerDownOutside={() => setPendingNote(null)}
+                    sideOffset={20}
+                    side='right'
                 >
                     <form
-                    action="#"
-                    className='create-note-form'
-                    onSubmit={ handleNoteSubmit }
+                        action='#'
+                        className='create-note-form'
+                        onSubmit={handleNoteSubmit}
                     >
-                        <div className="form-buttons">
-                            <input type="text" name="text" placeholder='Add a comment'/>
+                        <div className='form-buttons'>
+                            <input
+                                type='text'
+                                name='text'
+                                placeholder='Add a comment'
+                            />
                             <button>
                                 <AiOutlineArrowUp fill='#fff' />
                             </button>

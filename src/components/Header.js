@@ -7,15 +7,16 @@ const Header = () => {
 
     return (
         <header>
-            <label htmlFor="note-mode">
-                Note Mode
-            </label>
+            <label htmlFor='note-mode'>Note Mode</label>
 
-            <Switch.Root onClick={ toggleNoteMode } className="toggle" id="note-mode">
-                <Switch.Thumb className="switch-thumb" />
+            <Switch.Root
+                onClick={toggleNoteMode}
+                className='toggle'
+                id='note-mode'
+            >
+                <Switch.Thumb className='switch-thumb' />
             </Switch.Root>
-      </header>
-    
+        </header>
     );
 };
 
