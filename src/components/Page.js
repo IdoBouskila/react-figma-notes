@@ -4,32 +4,22 @@ import { useNote } from '../hooks/useNote';
 import CreateNoteForm from './CreateNoteForm';
 import unique from 'unique-selector';
 import Note from './Note';
+import { getCoords } from '../helper';
 
 const Page = ({ children }) => {
+    // TODO: Maybe move everyting to the context
     const { isNoteMode } = useMode();
     const { notes, dispatch } = useNote();
-    const [pendingNote, setPendingNote] = useState(null);
+    const [ pendingNote, setPendingNote ] = useState(null);
     
     const handlePageClick = (e) => {
         e.preventDefault();
-
         const elementUniqueSelector = unique(e.target);
-        const bounds = e.target.getBoundingClientRect();
-        const pinSize = 30;
         
         setPendingNote(
         {
-            target_selector: elementUniqueSelector,
-            coords: {
-                x: {
-                    size: ((e.clientX - Math.round(bounds.left) - (pinSize / 2)) / window.innerWidth) * 100,
-                    unit: 'vw'
-                },
-                y: {
-                    size: ((e.clientY - Math.round(bounds.top) - (pinSize / 2)) / window.innerHeight) * 100,    
-                    unit: 'vh'
-                }
-            }
+            targetSelector: elementUniqueSelector,
+            coords: getCoords(e)
         });
     }
 
@@ -55,7 +45,7 @@ const Page = ({ children }) => {
                 notes.map(note => {
                     return (
                         <Note
-                            key={ note.id}
+                            key={ note.id }
                             noteDetails={ note }
                             noteDispatch={ dispatch }
                         />
