@@ -176,6 +176,19 @@ form button {
   border-radius: 50%;
   background: #d9d9d9;
   cursor: pointer;
+  transition: background .2s ease-in;
+}
+
+form button:hover {
+  background: #0d99ff; 
+}
+
+.note-container .comment form button:hover {
+  background: rgba(13, 154, 255, 0.75);
+}
+
+form button > svg {
+  fill: #fff;
 }
 
 .note-container {
@@ -254,22 +267,25 @@ form button {
   justify-content: left;
 }
 
-.comment-editable {
+.note-container .comment form {
+  --form-vertical-space: 8px;
   display: flex;
-  padding: 0 8px;
   gap: 5px;
+  padding: 0 var(--form-vertical-space);
   border: 1px solid #0d99ff;
   border-radius: 6px;
 }
 
-.note-container .comment-editable > input{
+.note-container .comment form > input {
   all: unset;
   word-break: break-word;
   flex: 2;
   font-size: 0.8em;
+  padding-left: calc(var(---message-header-gap) + var(--img-size) - var(--form-vertical-space));
 }
 
-.comment-editable button {
+.note-container .comment form button {
+  display: inline;
   position: static;
   width: 20px;
   height: 20px;
@@ -277,7 +293,7 @@ form button {
   background-color: #0d99ff;
 }
 
-.comment-editable button > svg {
+.note-container .comment form button > svg {
   height: 100%;
   width: 100%;
   fill: #fff;
