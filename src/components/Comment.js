@@ -3,32 +3,29 @@ import { MdCancel } from 'react-icons/md';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useDispatch } from 'react-redux';
+import { updateComment } from '../redux/notesSettings';
 
-const Comment = ({ commentDetails, noteDispatch }) => {
+const Comment = ({ commentDetails }) => {
     const [isCommentEditable, setIsCommentEditable] = useState(false);
     const editCommentInputRef = useRef();
     const { id, text, time } = commentDetails;
+    const dispatch = useDispatch();
 
     const handleEditCommentSubmit = (e) => {
         e.preventDefault();
-
-        noteDispatch({
-            type: 'comment_updated',
-            payload: {
-                id,
-                text: editCommentInputRef.current.value
-            }   
-        })
+        
+        dispatch(updateComment({ id, text: editCommentInputRef.current.value }))
 
         setIsCommentEditable(false);
     }
-    
+
     return (
         <div  className='comment'>
             <div className='comment-header'>
                 <img src="https://i.pravatar.cc/300" alt="" />
-                <strong>Ido Bouskila</strong>
-                <span className='date'>25 minutes ago</span>
+                <strong>John Doe</strong>
+                <span className='date'>{ time }</span>
                                 
                 {
                     ! isCommentEditable &&
@@ -52,7 +49,7 @@ const Comment = ({ commentDetails, noteDispatch }) => {
                     </DropdownMenu.Root>
                 }
             </div>
-
+            
             {
                 isCommentEditable
                 ?
@@ -72,7 +69,6 @@ const Comment = ({ commentDetails, noteDispatch }) => {
                         { text }
                     </p>
             }
-            
         </div>
     );
 };

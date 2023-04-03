@@ -2,25 +2,25 @@ import React from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import * as Popover from '@radix-ui/react-popover';
 import * as Portal from '@radix-ui/react-portal';
+import { useDispatch } from 'react-redux';
+import { addNote } from '../redux/notesSettings';
 
-const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
+const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
     const { targetSelector, coords } = pendingNote;
+    const dispatch = useDispatch();
 
     const handleNoteSubmit = (e) => {
         e.preventDefault();
 
         const data = new FormData(e.target);
 
-        noteDispatch({
-            type: 'note_added',
-            payload: {
+        dispatch(
+            addNote({
                 targetSelector,
                 coords,
                 text: data.get('text'),
-            },
-        });
-
-        data.delete('text');
+            })
+        );
 
         setPendingNote(null);
     };
@@ -29,7 +29,7 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
         <Popover.Root open={true}>
             <Portal.Root
                 className='note'
-                container={document.querySelector(targetSelector)}
+                container={ document.querySelector(targetSelector) }
             >
                 <Popover.Trigger
                     className='create-note-form pin'
@@ -43,25 +43,23 @@ const CreateNoteForm = ({ pendingNote, setPendingNote, noteDispatch }) => {
 
             <Popover.Portal>
                 <Popover.Content
-                    onPointerDownOutside={() => setPendingNote(null)}
+                    onPointerDownOutside={ () => setPendingNote(null) }
                     sideOffset={20}
                     side='right'
                 >
                     <form
                         action='#'
                         className='create-note-form'
-                        onSubmit={handleNoteSubmit}
+                        onSubmit={ handleNoteSubmit }
                     >
-                        <div className='form-buttons'>
-                            <input
-                                type='text'
-                                name='text'
-                                placeholder='Add a comment'
-                            />
-                            <button>
-                                <AiOutlineArrowUp fill='#fff' />
-                            </button>
-                        </div>
+                        <input
+                            type='text'
+                            name='text'
+                            placeholder='Add a comment'
+                        />
+                        <button>
+                            <AiOutlineArrowUp fill='#fff' />
+                        </button>
                     </form>
                 </Popover.Content>
             </Popover.Portal>

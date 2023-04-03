@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import { useMode } from '../contexts/ModeProvider';
-import { useNote } from '../hooks/useNote';
-import CreateNoteForm from './CreateNoteForm';
-import unique from 'unique-selector';
 import Note from './Note';
+import unique from 'unique-selector';
 import { getCoords } from '../helper';
+import { useSelector } from 'react-redux';
+import CreateNoteForm from './CreateNoteForm';
+import { selectIsNotMode, selectNotes } from '../redux/notesSettings';
 
 const Page = ({ children }) => {
-    // TODO: Maybe move everyting to the context
-    const { isNoteMode } = useMode();
-    const { notes, dispatch } = useNote();
-    const [ pendingNote, setPendingNote ] = useState(null);
-    
+    const [pendingNote, setPendingNote] = useState(null);
+    const isNoteMode = useSelector(selectIsNotMode);
+    const notes = useSelector(selectNotes);
+
     const handlePageClick = (e) => {
         e.preventDefault();
         const elementUniqueSelector = unique(e.target);
-        
-        setPendingNote(
-        {
+
+        setPendingNote({
             targetSelector: elementUniqueSelector,
             coords: getCoords(e)
         });
-    }
+    };
 
     return (
         <>
@@ -29,27 +27,26 @@ const Page = ({ children }) => {
                 className={ isNoteMode ? 'page-wrapper note-mode' : 'page-wrapper' }
                 onClick={ handlePageClick }
             >
-                { children }
+                {children}
             </div>
 
             {
-                (isNoteMode && pendingNote) &&
+                isNoteMode && pendingNote && (
                     <CreateNoteForm
-                        noteDispatch={ dispatch }
                         pendingNote={ pendingNote }
                         setPendingNote={ setPendingNote }
                     />
+                )
             }
 
             {
-                notes.map(note => {
+                notes.map((note) => {
                     return (
                         <Note
                             key={ note.id }
-                            noteDetails={ note }
-                            noteDispatch={ dispatch }
+                            note={ note }
                         />
-                    )
+                    );
                 })
             }
         </>

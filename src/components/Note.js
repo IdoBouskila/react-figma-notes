@@ -7,44 +7,35 @@ import {
     AiOutlineClose,
 } from 'react-icons/ai';
 import Comment from './Comment';
+import { useDispatch } from 'react-redux';
+import { addComment, deleteNote } from '../redux/notesSettings';
 
-const Note = ({ noteDetails, noteDispatch }) => {
-    const { id, coords, comments, targetSelector } = noteDetails;
+const Note = ({ note }) => {
+    const { id, coords, comments, targetSelector } = note;
+    const dispatch = useDispatch();
 
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
 
-        noteDispatch({
-            type: 'comment_added',
-            payload: {
+        dispatch(
+            addComment({
                 id,
                 text: data.get('text'),
-            },
-        });
+            }
+        ));
 
         // reset form input
         data.delete('text');
-    };
-
-    const handleDeleteNoteClick = () => {
-        noteDispatch({
-            type: 'note_deleted',
-            payload: {
-                id,
-            },
-        });
     };
 
     return (
         <Popover.Root defaultOpen={true}>
             <Portal.Root
                 className='note'
-                container={document.querySelector(targetSelector)}
+                container={ document.querySelector(targetSelector) }
                 style={{
-                    transform: `translate3d(${coords.x.size + coords.x.unit}, ${
-                        coords.y.size + coords.y.unit
-                    }, 0)`,
+                    transform: `translate3d(${ coords.x.size + coords.x.unit }, ${ coords.y.size + coords.y.unit}, 0)`,
                 }}
             >
                 <Popover.Trigger className='note-pin pin' />
@@ -54,13 +45,13 @@ const Note = ({ noteDetails, noteDispatch }) => {
                 <Popover.Content
                     className='note-container'
                     side='right'
-                    sideOffset={20}
+                    sideOffset={ 20 }
                 >
                     <div className='note-header'>
                         <div className='buttons'>
                             <button
                                 className='note-icons-btn'
-                                onClick={handleDeleteNoteClick}
+                                onClick={ () => dispatch( deleteNote(id) ) }
                             >
                                 <AiOutlineCheckCircle />
                             </button>
@@ -72,33 +63,34 @@ const Note = ({ noteDetails, noteDispatch }) => {
                     </div>
 
                     <div className='comments-container'>
-                        {comments.map((comment) => {
+                        { comments.map((comment) => {
                             const { id } = comment;
 
                             return (
                                 <Comment
                                     key={id}
-                                    commentDetails={comment}
-                                    noteDispatch={noteDispatch}
+                                    commentDetails={ comment }
                                 />
                             );
-                        })}
+                        }) }
                     </div>
 
-                    <form action='' onSubmit={handleCommentSubmit}>
+
+                    <div className='form-container'>
                         <img src='https://i.pravatar.cc/300' alt='' />
 
-                        <div className='form-buttons'>
+                        <form class="comment-form" action='' onSubmit={ handleCommentSubmit }>
                             <input
                                 type='text'
                                 name='text'
                                 placeholder='Reply'
                             />
+
                             <button>
                                 <AiOutlineArrowUp fill='#fff' />
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </Popover.Content>
             </Popover.Portal>
         </Popover.Root>
