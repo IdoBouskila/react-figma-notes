@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import * as Portal from '@radix-ui/react-portal';
 import {
@@ -12,21 +12,20 @@ import { addComment, deleteNote } from '../redux/notesSettings';
 
 const Note = ({ note }) => {
     const { id, coords, comments, targetSelector } = note;
+    const inputRef = useRef(null);
     const dispatch = useDispatch();
 
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        const data = new FormData(e.target);
 
         dispatch(
             addComment({
                 id,
-                text: data.get('text'),
-            }
-        ));
+                text: inputRef.current.value,
+            })
+        );
 
-        // reset form input
-        data.delete('text');
+        inputRef.current.value = '';
     };
 
     return (
@@ -82,7 +81,7 @@ const Note = ({ note }) => {
                         <form class="comment-form" action='' onSubmit={ handleCommentSubmit }>
                             <input
                                 type='text'
-                                name='text'
+                                ref={ inputRef }
                                 placeholder='Reply'
                             />
 
