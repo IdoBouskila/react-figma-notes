@@ -1,35 +1,18 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import * as Portal from '@radix-ui/react-portal';
-import {
-    AiOutlineArrowUp,
-    AiOutlineCheckCircle,
-    AiOutlineClose,
-} from 'react-icons/ai';
+import { AiOutlineCheckCircle, AiOutlineClose} from 'react-icons/ai';
 import Comment from './Comment';
 import { useDispatch } from 'react-redux';
 import { addComment, deleteNote } from '../redux/notesSettings';
+import NoteForm from './NoteForm';
 
 const Note = ({ note }) => {
     const { id, coords, comments, targetSelector } = note;
-    const inputRef = useRef(null);
     const dispatch = useDispatch();
 
-    const handleCommentSubmit = (e) => {
-        e.preventDefault();
-
-        dispatch(
-            addComment({
-                id,
-                text: inputRef.current.value,
-            })
-        );
-
-        inputRef.current.value = '';
-    };
-
     return (
-        <Popover.Root defaultOpen={true}>
+        <Popover.Root defaultOpen={ true }>
             <Portal.Root
                 className='note'
                 container={ document.querySelector(targetSelector) }
@@ -77,18 +60,7 @@ const Note = ({ note }) => {
 
                     <div className='form-container'>
                         <img src='https://i.pravatar.cc/300' alt='' />
-
-                        <form class="comment-form" action='' onSubmit={ handleCommentSubmit }>
-                            <input
-                                type='text'
-                                ref={ inputRef }
-                                placeholder='Reply'
-                            />
-
-                            <button>
-                                <AiOutlineArrowUp fill='#fff' />
-                            </button>
-                        </form>
+                        <NoteForm onSubmit={ (text) => dispatch( addComment({ id, text }) ) }/>
                     </div>
                 </Popover.Content>
             </Popover.Portal>

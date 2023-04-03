@@ -1,32 +1,21 @@
 import React from 'react';
-import { AiOutlineArrowUp } from 'react-icons/ai';
 import * as Popover from '@radix-ui/react-popover';
 import * as Portal from '@radix-ui/react-portal';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../redux/notesSettings';
+import NoteForm from './NoteForm';
 
 const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
     const { targetSelector, coords } = pendingNote;
     const dispatch = useDispatch();
 
-    const handleNoteSubmit = (e) => {
-        e.preventDefault();
-
-        const data = new FormData(e.target);
-
-        dispatch(
-            addNote({
-                targetSelector,
-                coords,
-                text: data.get('text'),
-            })
-        );
-
-        setPendingNote(null);
+    const handleNoteSubmit = (text) => {
+        dispatch( addNote({ targetSelector, coords, text }) );
+        setPendingNote(null)
     };
 
     return (
-        <Popover.Root open={true}>
+        <Popover.Root open={ true }>
             <Portal.Root
                 className='note'
                 container={ document.querySelector(targetSelector) }
@@ -47,20 +36,7 @@ const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
                     sideOffset={20}
                     side='right'
                 >
-                    <form
-                        action='#'
-                        className='create-note-form'
-                        onSubmit={ handleNoteSubmit }
-                    >
-                        <input
-                            type='text'
-                            name='text'
-                            placeholder='Add a comment'
-                        />
-                        <button>
-                            <AiOutlineArrowUp fill='#fff' />
-                        </button>
-                    </form>
+                    <NoteForm onSubmit={ handleNoteSubmit } />
                 </Popover.Content>
             </Popover.Portal>
         </Popover.Root>

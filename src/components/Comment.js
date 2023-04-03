@@ -1,25 +1,15 @@
-import React, { useRef, useState } from 'react';
-import { MdCancel } from 'react-icons/md';
+import React, { useState } from 'react';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { AiOutlineArrowUp } from 'react-icons/ai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useDispatch } from 'react-redux';
 import { updateComment } from '../redux/notesSettings';
+import NoteForm from './NoteForm';
 
 const Comment = ({ commentDetails }) => {
     const [isCommentEditable, setIsCommentEditable] = useState(false);
-    const editCommentInputRef = useRef();
     const { id, text, time } = commentDetails;
     const dispatch = useDispatch();
-
-    const handleEditCommentSubmit = (e) => {
-        e.preventDefault();
-        
-        dispatch(updateComment({ id, text: editCommentInputRef.current.value }))
-
-        setIsCommentEditable(false);
-    }
-
+    
     return (
         <div  className='comment'>
             <div className='comment-header'>
@@ -53,17 +43,11 @@ const Comment = ({ commentDetails }) => {
             {
                 isCommentEditable
                 ?
-                    <form className='comment-editable' onSubmit={ handleEditCommentSubmit }>
-                        <input type='text' className='comment-content editable' ref={ editCommentInputRef } />
-                        
-                            <button type='button' onClick={ () => setIsCommentEditable(false) }>
-                                <MdCancel />
-                            </button>
-
-                            <button type='submit'>
-                                <AiOutlineArrowUp />
-                            </button>
-                    </form>
+                    <NoteForm
+                        defaultInputValue={ text }
+                        onSubmit={ (text) => dispatch( updateComment({ id, text }) ) }
+                        closeForm={ () => setIsCommentEditable(false) }
+                    />
                 :
                     <p className='comment-content' >
                         { text }
