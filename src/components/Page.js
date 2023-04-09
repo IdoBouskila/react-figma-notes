@@ -33,23 +33,27 @@ const Page = ({ children }) => {
             </div>
 
             {
-                isNoteMode && pendingNote && (
-                    <CreateNoteForm
-                        pendingNote={ pendingNote }
-                        setPendingNote={ setPendingNote }
-                    />
+                isNoteMode && (
+                    <>
+                        {
+                            pendingNote && 
+                                <CreateNoteForm
+                                pendingNote={ pendingNote }
+                                setPendingNote={ setPendingNote }
+                                />
+                        }
+                        {
+                            notes.map((note) => {
+                                return (
+                                    <Note
+                                        key={ note.id }
+                                        note={ note }
+                                    />
+                                );
+                            })
+                        }
+                    </>
                 )
-            }
-
-            {
-                notes.map((note) => {
-                    return (
-                        <Note
-                            key={ note.id }
-                            note={ note }
-                        />
-                    );
-                })
             }
         </>
     );
