@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Note from './Note';
 import unique from 'unique-selector';
-import { getCoords } from '../helper';
 import { useSelector } from 'react-redux';
 import CreateNoteForm from './CreateNoteForm';
 import { selectIsNotMode, selectNotes } from '../redux/notesSettings';
@@ -10,9 +9,10 @@ const Page = ({ children }) => {
     const [pendingNote, setPendingNote] = useState(null);
     const isNoteMode = useSelector(selectIsNotMode);
     const notes = useSelector(selectNotes);
-
+    
     const handlePageClick = (e) => {
         e.preventDefault();
+
         const elementUniqueSelector = unique(e.target);
 
         setPendingNote({
@@ -25,9 +25,9 @@ const Page = ({ children }) => {
         <>
             <div
                 className={ isNoteMode ? 'page-wrapper note-mode' : 'page-wrapper' }
-                onClick={ handlePageClick }
+                onClick={ isNoteMode ? handlePageClick : undefined }
             >
-                {children}
+                { children }
             </div>
 
             {
@@ -54,3 +54,19 @@ const Page = ({ children }) => {
 };
 
 export default Page;
+
+function getCoords(e) {
+    const bounds = e.target.getBoundingClientRect();
+    const pinSize = 30;
+
+    return {
+        x: {
+            size: ((e.clientX - Math.round(bounds.left) - (pinSize / 2)) / window.innerWidth) * 100,
+            unit: 'vw',
+        },
+        y: {
+            size: ((e.clientY - Math.round(bounds.top) - (pinSize / 2)) / window.innerHeight) * 100,    
+            unit: 'vh'
+        }
+    }
+}
