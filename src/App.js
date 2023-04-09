@@ -1,5 +1,5 @@
 import './App.css';
-import Demo from './components/Demo';
+import Demo from './components/demo/Demo';
 import SwitchModeButton from './components/SwitchModeButton';
 import Page from './components/Page';
 

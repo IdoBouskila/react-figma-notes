@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --main-text-color: #dfecfb;
+    --footer-text-color: #ababad;
+    --pink-color: #c977e5;
+    --purple-color: #404580;
+}
+
+body {
+    background: #030307;
+}
+
+a {
+    cursor: pointer;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2em 6em;
+    height: 100vh;
+}
+
+.wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://grainy-gradients.vercel.app/noise.svg') repeat,
+                linear-gradient(180deg, #35394f 0%, #404580 100%);
+    mask-image: linear-gradient(rgba(0, 0, 0, 0.9), transparent 100%);
+    background-blend-mode: overlay;
+    z-index: -1;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .icons {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, #1c1e24 100%);
+    border-radius: 50%;
+    padding: 5px;
+    border: 1px solid #1e1c22;
+}
+
+nav .icons svg {
+    font-size: 1.8em;
+    padding: 3px;
+    fill: var(--pink-color);
+}
+
+nav .logo svg {
+    width: 90px;
+    height: 90px;
+    fill: #fff;
+    aspect-ratio: 1;
+}
+
+.hero { 
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    align-items: center;
+    line-height: 0.85;
+    max-height: 40%;
+}
+
+.hero h1 {
+    font-weight: 400;
+    font-size: 6em;
+    color: var(--main-text-color);
+}
+
+.hero span {
+    font-size: 6.5em;
+    font-weight: 100;
+    background: linear-gradient(180deg, var(--main-text-color) 0% ,#7479b1 30%,  #6a70af 40%, var(--purple-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero img {
+    width: 90vw;
+    top: -37%;
+    max-width: 80vh;
+    filter: saturate(1.6);
+    mask-image: url('https://grainy-gradients.vercel.app/noise.svg'), linear-gradient(rgb(0, 0, 0), transparent);
+    image-rendering: pixelated;
+}
+
+.footer {
+    display: flex;
+    padding: 20px 0;
+    margin-top: auto;
+    justify-content: space-between;
+}
+
+.footer div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9em;
+    color: var(--footer-text-color);
+}
+
+.footer div .description {
+    font-weight: 600;
+}
+
+.footer div img {
+    margin-top: 20px;
+    width: 45px;
+}
+
+@media screen and (max-width: 820px) {
+    .wrapper {
+        font-size: 9px;
+        padding: 2em 3em;
+    }
+
+    .hero {
+        margin-top: auto;
+    }
+
+    .hero img {
+        top: -13%;
+    }
+}
