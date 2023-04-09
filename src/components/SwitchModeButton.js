@@ -3,7 +3,7 @@ import * as Switch from '@radix-ui/react-switch';
 import { toggleNoteMode } from '../redux/notesSettings';
 import { useDispatch } from 'react-redux';
 
-const Header = () => {
+const SwitchModeButton = () => {
     const dispatch = useDispatch();
 
     return (
@@ -21,4 +21,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default SwitchModeButton;

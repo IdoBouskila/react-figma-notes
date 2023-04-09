@@ -1,12 +1,12 @@
 import './App.css';
 import Demo from './components/Demo';
-import Header from './components/Header';
+import SwitchModeButton from './components/SwitchModeButton';
 import Page from './components/Page';
 
 function App() {
   return (
     <>
-      <Header />
+      <SwitchModeButton />
       
       <Page>
         <Demo />
