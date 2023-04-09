@@ -139,4 +139,8 @@ nav .logo svg {
     .hero img {
         top: -13%;
     }
+
+    .footer div img {
+        width: 30px;
+    }
 }
