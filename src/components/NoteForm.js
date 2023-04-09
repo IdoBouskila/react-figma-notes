@@ -11,7 +11,7 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
         
         // reset input after submit
         inputRef.current.value = '';
-        closeForm();
+        closeForm?.();
     };
     
     return (
