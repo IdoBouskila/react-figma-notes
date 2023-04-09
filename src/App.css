@@ -26,7 +26,7 @@ button {
   height: 100vh;
 }
 
-.page-wrapper.note-mode * {
+.page-wrapper.note-mode *:not(.pin) {
   cursor: url('../public/note-cursor.png') 10 10, cell !important;
 }
 
