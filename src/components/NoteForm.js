@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
-import { MdCancel } from 'react-icons/md';
+import { RxCross1 } from 'react-icons/rx';
 
 const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
     const inputRef = useRef(null);
@@ -26,8 +26,8 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
 
                 {
                     closeForm && (
-                        <button type='button' onClick={ closeForm }>
-                            <MdCancel />
+                        <button className='cancel-button' type='button' onClick={ closeForm }>
+                            <RxCross1 color='#fff' />
                         </button>
                     )
                 }

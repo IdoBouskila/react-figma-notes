@@ -163,10 +163,12 @@ form {
 }
 
 form input {
-  height: 40px;
+  height: 3em;
   width: 100%;
-  border: none;
+  max-width: 40vw;
   padding: 0 3em 0 1.2em;
+  font-size: 0.8em;
+  border: none;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 5px;
 }
@@ -176,8 +178,8 @@ form button {
   display: grid;
   place-content: center;
   right: 4%;
-  width: 26px;
-  height: 26px;
+  width: 1.65em;
+  height: 1.65em;
   border: none;
   border-radius: 50%;
   background: #d9d9d9;
@@ -185,12 +187,16 @@ form button {
   transition: background .2s ease-in;
 }
 
-form button:hover {
+form button:hover, .note-container .comment form button.cancel-button:hover {
   background: #0d99ff; 
 }
 
 .note-container .comment form button:hover {
   background: rgba(13, 154, 255, 0.75);
+}
+
+.note-container .comment form button .cancel-button {
+  background: #d9d9d9;
 }
 
 form button > svg {
@@ -203,6 +209,7 @@ form button > svg {
   display: flex;
   flex-direction: column;
   width: 338px;
+  max-width: 55vw;
   gap: 1.5em;
   padding: 1.2em;
   border-radius: 3px;
@@ -232,15 +239,15 @@ form button > svg {
 }
 
 .comment {
-  --img-size: 25px;
+  --img-size: 1.55em;
   display: flex;
   gap: 0.5em;
   flex-direction: column;
 }
 
 .note-container img {
-  width: var(--img-size, 25px);
-  height: var(--img-size, 25px);
+  width: var(--img-size, 1.55em);
+  height: var(--img-size, 1.55em);
   border-radius: 50%;
 }
 
@@ -284,17 +291,19 @@ form button > svg {
 
 .note-container .comment form > input {
   all: unset;
-  word-break: break-word;
   flex: 2;
   font-size: 0.8em;
+  width: 100%;
+  word-break: break-word;
   padding-left: calc(var(---message-header-gap) + var(--img-size) - var(--form-vertical-space));
 }
 
 .note-container .comment form button {
-  display: inline;
+  display: flex;
   position: static;
-  width: 20px;
-  height: 20px;
+  width: 0.9em;
+  height: 0.9em;
+  padding: 0.3em;
   border-radius: 50%;
   background-color: #0d99ff;
 }
@@ -368,4 +377,11 @@ form button > svg {
 
 .drop-down-item:hover {
   background: #0d99ff;
+}
+
+
+@media screen and (max-width: 820px) {
+  body {
+    font-size: 10px;
+  }
 }
