@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getLocalStorage } from '../helper';
-import { v4 } from 'uuid';
+import { getLocalStorage } from '../utils/localstorage';
+import { v4 as uniqueID } from 'uuid';
 
-function constructComment(text) {
+function makeComment(text) {
     return {
-        id: v4(),
-        text: text,
+        id: uniqueID(),
+        text,
         time: Date.now() 
     }
 }
@@ -27,10 +27,10 @@ export const notesSettingsSlice = createSlice({
             const { payload } = action;
 
             state.notes.push({
-                id: v4(),
+                id: uniqueID(),
                 coords: payload.coords,
                 targetSelector: payload.targetSelector,
-                comments: [ constructComment(payload.text) ]
+                comments: [ makeComment(payload.text) ]
             });
         },
 
@@ -45,7 +45,7 @@ export const notesSettingsSlice = createSlice({
             const { payload } = action;
             const selectedNote = state.notes.find(note => note.id === payload.id);
 
-            selectedNote.comments.push( constructComment(payload.text) );
+            selectedNote.comments.push( makeComment(payload.text) );
         },
 
         updateComment: (state, action) => {
