@@ -195,7 +195,7 @@ form button:hover, .note-container .comment form button.cancel-button:hover {
   background: rgba(13, 154, 255, 0.75);
 }
 
-.note-container .comment form button .cancel-button {
+.note-container .comment form button.cancel-button {
   background: #d9d9d9;
 }
 
