@@ -11,11 +11,15 @@ const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
 
     const handleNoteSubmit = (text) => {
         dispatch( addNote({ targetSelector, coords, text }) );
-        setPendingNote(null)
+        setPendingNote(null);
     };
 
     return (
-        <Popover.Root open={ true }>
+        <Popover.Root
+            open={ !! pendingNote }
+            onOpenChange={ (open) => ! open && setPendingNote(null) }
+            modal={ true }
+        >
             <Portal.Root
                 className='note'
                 container={ document.querySelector(targetSelector) }
@@ -25,14 +29,13 @@ const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
                     style={{
                         transform: `translate3d(${
                             coords.x.size + coords.x.unit
-                        }, ${coords.y.size + coords.y.unit}, 0)`,
+                        }, ${coords.y.size + coords.y.unit}, 0)`
                     }}
                 />
             </Portal.Root>
 
             <Popover.Portal>
-                <Popover.Content
-                    onPointerDownOutside={ () => setPendingNote(null) }
+                <Popover.Content    
                     sideOffset={20}
                     side='right'
                 >
