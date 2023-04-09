@@ -23,11 +23,10 @@ button {
 }
 
 .page-wrapper {
-  width: 100vw;
   height: 100vh;
 }
 
-.page-wrapper.note-mode {
+.page-wrapper.note-mode * {
   cursor: url('../public/note-cursor.png') 10 10, cell !important;
 }
 
@@ -206,7 +205,7 @@ form button > svg {
 
 .note-header {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 5px;
 }
