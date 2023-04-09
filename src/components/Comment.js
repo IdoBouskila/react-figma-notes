@@ -21,7 +21,7 @@ const Comment = ({ commentDetails }) => {
                     ! isCommentEditable &&
                     <DropdownMenu.Root>
                         <div className='edit-button-container'>
-                            <DropdownMenu.Trigger class="edit-button note-icons-btn">
+                            <DropdownMenu.Trigger className="edit-button note-icons-btn">
                                     <FiMoreHorizontal />
                             </DropdownMenu.Trigger>
                         </div>
