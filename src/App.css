@@ -191,6 +191,10 @@ form button {
   transition: background .2s ease-in;
 }
 
+form button.active {
+  background: #0d99ff;
+}
+
 form button:hover, .note-container .comment form button.cancel-button:hover {
   background: #0d99ff; 
 }

@@ -1,16 +1,25 @@
 import React, { useRef } from 'react';
+import { useState } from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
 
 const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
     const inputRef = useRef(null);
+    const [isDirty, setIsDirty] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(inputRef.current.value === '') {
+            return;
+        }
+
         onSubmit(inputRef.current.value);
         
         // reset input after submit
         inputRef.current.value = '';
+        setIsDirty(false);
+
         closeForm?.();
     };
     
@@ -22,6 +31,7 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
                     type='text'
                     placeholder='Add a comment'
                     defaultValue={ defaultInputValue }
+                    onChange={ (e) => setIsDirty( e.target.value !== e.target.defaultValue ) }
                 />
 
                 {
@@ -32,7 +42,7 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
                     )
                 }
 
-                <button type='submit'>
+                <button type='submit' className={ isDirty ? 'active' : '' }>
                     <AiOutlineArrowUp />
                 </button>
             </form>
