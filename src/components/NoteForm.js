@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { AiOutlineArrowUp } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
 
-const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
+const NoteForm = ({ onSubmit, onCancel, defaultInputValue }) => {
     const inputRef = useRef(null);
     const [isDirty, setIsDirty] = useState(false);
 
@@ -19,8 +19,6 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
         // reset input after submit
         inputRef.current.value = '';
         setIsDirty(false);
-
-        closeForm?.();
     };
     
     return (
@@ -35,8 +33,8 @@ const NoteForm = ({ onSubmit, closeForm, defaultInputValue }) => {
                 />
 
                 {
-                    closeForm && (
-                        <button className='cancel-button' type='button' onClick={ closeForm }>
+                    onCancel && (
+                        <button className='cancel-button' type='button' onClick={ onCancel }>
                             <RxCross1 color='#fff' />
                         </button>
                     )

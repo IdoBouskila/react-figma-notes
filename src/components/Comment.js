@@ -46,8 +46,13 @@ const Comment = ({ commentDetails }) => {
                 ?
                     <NoteForm
                         defaultInputValue={ text }
-                        onSubmit={ (text) => dispatch( updateComment({ id, text }) ) }
-                        closeForm={ () => setIsCommentEditable(false) }
+                        onSubmit={
+                            (newText) => { 
+                                dispatch( updateComment({ id, text: newText }) );
+                                setIsCommentEditable(false);
+                            } 
+                        }
+                        onCancel={ () => setIsCommentEditable(false) }
                     />
                 :
                     <p className='comment-content' >
