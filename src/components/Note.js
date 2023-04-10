@@ -12,7 +12,10 @@ const Note = ({ note }) => {
     const dispatch = useDispatch();
 
     return (
-        <Popover.Root defaultOpen={ true }>
+        <Popover.Root
+            modal={ false }
+            defaultOpen={ true }
+        >
             <Portal.Root
                 className='note'
                 container={ document.querySelector(targetSelector) }
