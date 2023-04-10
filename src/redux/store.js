@@ -9,7 +9,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-    saveLocalStorage(store.getState().notesSettings.notes);
+    saveLocalStorage(store.getState().notesSettings.entities);
 });
 
 export default store;

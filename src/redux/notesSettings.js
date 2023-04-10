@@ -13,20 +13,20 @@ function makeComment(text) {
 export const notesSettingsSlice = createSlice({
     name: 'notesSettings',
     initialState: {
-        isNoteMode: false,
-        notes: getLocalStorage()
+        isActive: false,
+        entities: getLocalStorage()
     },
     reducers: {
         toggleNoteMode: (state) => {
-            const { isNoteMode } = state;
+            const { isActive } = state;
 
-            state.isNoteMode = ! isNoteMode;
+            state.isActive = ! isActive;
         },
 
         addNote: (state, action) => {
             const { payload } = action;
 
-            state.notes.push({
+            state.entities.push({
                 id: uniqueID(),
                 coords: payload.coords,
                 targetSelector: payload.targetSelector,
@@ -35,24 +35,24 @@ export const notesSettingsSlice = createSlice({
         },
 
         deleteNote: (state, action) => {
-            const { notes } = state;
+            const { entities } = state;
             const { payload } = action;
 
-            state.notes = notes.filter(note => note.id !== payload);
+            state.entities = entities.filter(note => note.id !== payload);
         },
 
         addComment: (state, action) => {
             const { payload } = action;
-            const selectedNote = state.notes.find(note => note.id === payload.id);
+            const selectedNote = state.entities.find(note => note.id === payload.id);
 
             selectedNote.comments.push( makeComment(payload.text) );
         },
 
         updateComment: (state, action) => {
             const { payload } = action;
-            const { notes } = state;
+            const { entities } = state;
 
-            for (const note of notes) {
+            for (const note of entities) {
                 const selectedComment = note.comments.find(comment => comment.id === payload.id);
 
                 if(selectedComment) {
@@ -66,7 +66,7 @@ export const notesSettingsSlice = createSlice({
 
 export const { toggleNoteMode, addNote, deleteNote, addComment, updateComment } = notesSettingsSlice.actions;
 
-export const selectNotes = (state) => state.notesSettings.notes;
-export const selectIsNotMode = (state) => state.notesSettings.isNoteMode;
+export const selectNotes = (state) => state.notesSettings.entities;
+export const selectIsNotMode = (state) => state.notesSettings.isActive;
 
 export default notesSettingsSlice.reducer;
