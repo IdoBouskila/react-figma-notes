@@ -13,7 +13,7 @@ const Note = ({ note }) => {
 
     return (
         <Popover.Root
-            modal={ false }
+            modal={ true }
             defaultOpen={ true }
         >
             <Portal.Root
