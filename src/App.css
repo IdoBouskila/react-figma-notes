@@ -1,3 +1,7 @@
+:root {
+  --max-int: 2147483647;
+}
+
 * {
   position: relative;
   margin: 0;
@@ -44,7 +48,7 @@ header {
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   transform: translate(-50%, 0);
-  z-index: 2;
+  z-index: 1;
 }
 
 header label {
@@ -98,7 +102,7 @@ header label {
 .note {
   position: absolute;
   inset: 0 auto auto 0;
-  z-index: 9999;
+  z-index: var(--max-int);
 }
 
 .create-note-form .pin {
@@ -215,6 +219,10 @@ form button > svg {
   border-radius: 3px;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 5px;
+}
+
+div[data-radix-popper-content-wrapper] {
+  z-index: var(--max-int) !important;
 }
 
 .note-header {
