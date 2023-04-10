@@ -326,6 +326,7 @@ form button > svg {
 }
 
 .note-icons-btn {
+  display: flex;
   aspect-ratio: 1;
   padding: 6px;
   border-radius: 2px;
