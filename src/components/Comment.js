@@ -4,6 +4,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useDispatch } from 'react-redux';
 import { updateComment } from '../redux/notesSettings';
 import NoteForm from './NoteForm';
+import { formatRelativeTime } from '../utils/helpers';
 
 const Comment = ({ commentDetails }) => {
     const [isCommentEditable, setIsCommentEditable] = useState(false);
@@ -15,7 +16,7 @@ const Comment = ({ commentDetails }) => {
             <div className='comment-header'>
                 <img src="https://i.pravatar.cc/300" alt="" />
                 <strong>John Doe</strong>
-                <span className='date'>{ time }</span>
+                <span className='date'>{ formatRelativeTime(time) }</span>
                                 
                 {
                     ! isCommentEditable &&

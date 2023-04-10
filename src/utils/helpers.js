@@ -31,3 +31,33 @@ export function isPinableElement(target) {
 
     return true;
 }
+
+export function formatRelativeTime(date) {
+    const formatter = new Intl.RelativeTimeFormat(undefined, {
+        numeric: 'auto'
+    });
+
+    const units = [
+        { amount: 60, name: 'seconds' },
+        { amount: 60, name: 'minutes' },
+        { amount: 24, name: 'hours' },
+        { amount: 7, name: 'days' },
+        { amount: 4.34524, name: 'weeks' },
+        { amount: 12, name: 'months' },
+        { amount: Number.POSITIVE_INFINITY, name: 'years' }
+    ];
+
+    const formatTime = (date) => {
+        let duration = (date - new Date()) / 1000;
+
+        for (const unit of units) {
+            if(Math.abs(duration) < unit.amount) {
+                return formatter.format(Math.round(duration), unit.name);
+            }
+
+            duration /= unit.amount
+        }
+    }
+
+    return formatTime(date)
+}
