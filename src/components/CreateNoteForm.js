@@ -35,7 +35,8 @@ const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
             </Portal.Root>
 
             <Popover.Portal>
-                <Popover.Content    
+                <Popover.Content
+                    className='create-note-content'
                     sideOffset={ 20 }
                     side='right'
                 >

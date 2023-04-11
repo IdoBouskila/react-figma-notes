@@ -137,6 +137,11 @@ header label {
   transition: .15s scale ease-in-out;
 }
 
+.note-pin {
+  transform-origin: 50% 50%;
+  animation: .5s ease bounceFade;
+}
+
 .note-pin:hover::before {
   scale: 1.2;
   box-shadow: rgba(0, 0, 0, 0.5) 0 2px 5px,
@@ -215,7 +220,7 @@ form button > svg {
 }
 
 .note-container {
-  ---message-header-gap: 0.8em;
+  --message-header-gap: 0.8em;
 
   display: flex;
   flex-direction: column;
@@ -227,6 +232,12 @@ form button > svg {
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.4) 2px 2px 5px;
 }
+
+.note-container, .create-note-content {
+  transform-origin: 50% 50%;
+  animation: .2s ease fadeIn;
+}
+
 
 div[data-radix-popper-content-wrapper] {
   z-index: var(--max-int) !important;
@@ -269,7 +280,7 @@ div[data-radix-popper-content-wrapper] {
 .comment-header, .form-container {
   display: flex;
   align-items: center;
-  gap: var(---message-header-gap);
+  gap: var(--message-header-gap);
 }
 
 .comment-header strong {
@@ -283,7 +294,7 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .comment-content {
-  padding-left: calc(var(---message-header-gap) + var(--img-size));
+  padding-left: calc(var(--message-header-gap) + var(--img-size));
   word-break: break-word;
   font-size: 0.8em;
 }
@@ -310,7 +321,7 @@ div[data-radix-popper-content-wrapper] {
   font-size: 0.8em;
   width: 100%;
   word-break: break-word;
-  padding-left: calc(var(---message-header-gap) + var(--img-size) - var(--form-vertical-space));
+  padding-left: calc(var(--message-header-gap) + var(--img-size) - var(--form-vertical-space));
 }
 
 .note-container .comment form button {
@@ -395,9 +406,32 @@ div[data-radix-popper-content-wrapper] {
   background: var(--color-active-btn);
 }
 
-
 @media screen and (max-width: 820px) {
   body {
     font-size: 10px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceFade {
+  0% {
+    opacity: 0;
+    transform: scale(.5);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1; transform: scale(1);
   }
 }
