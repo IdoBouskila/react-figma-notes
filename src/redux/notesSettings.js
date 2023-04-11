@@ -14,6 +14,7 @@ export const notesSettingsSlice = createSlice({
     name: 'notesSettings',
     initialState: {
         isActive: false,
+        activeEntityId: null,
         entities: getLocalStorage()
     },
     reducers: {
@@ -22,16 +23,26 @@ export const notesSettingsSlice = createSlice({
 
             state.isActive = ! isActive;
         },
-
+        setActiveEntityId: (state, action) => {
+            const { payload } = action;
+            
+            state.activeEntityId =  payload;
+        },
+        resetActiveEntityId: (state) => {
+            state.activeEntityId = null;
+        },
         addNote: (state, action) => {
             const { payload } = action;
+            const noteId = uniqueID();
 
             state.entities.push({
-                id: uniqueID(),
+                id: noteId,
                 coords: payload.coords,
                 targetSelector: payload.targetSelector,
                 comments: [ makeComment(payload.text) ]
             });
+
+            state.activeEntityId = noteId;
         },
 
         deleteNote: (state, action) => {
@@ -64,8 +75,9 @@ export const notesSettingsSlice = createSlice({
     }
 });
 
-export const { toggleNoteMode, addNote, deleteNote, addComment, updateComment } = notesSettingsSlice.actions;
+export const { toggleNoteMode, setActiveEntityId, resetActiveEntityId, addNote, deleteNote, addComment, updateComment } = notesSettingsSlice.actions;
 
+export const selectActiveEntityId = (state) => state.notesSettings.activeEntityId;
 export const selectNotes = (state) => state.notesSettings.entities;
 export const selectIsNotMode = (state) => state.notesSettings.isActive;
 

@@ -3,20 +3,23 @@ import * as Popover from '@radix-ui/react-popover';
 import * as Portal from '@radix-ui/react-portal';
 import { AiOutlineCheckCircle, AiOutlineClose} from 'react-icons/ai';
 import Comment from './Comment';
-import { useDispatch } from 'react-redux';
-import { addComment, deleteNote } from '../redux/notesSettings';
+import { useDispatch, useSelector } from 'react-redux';
+import { addComment, deleteNote, resetActiveEntityId, selectActiveEntityId, setActiveEntityId } from '../redux/notesSettings';
 import NoteForm from './NoteForm';
 
 const Note = ({ note }) => {
     const { id, coords, comments, targetSelector } = note;
     const dispatch = useDispatch();
+    const activeNoteId = useSelector(selectActiveEntityId);
 
     return (
         <Popover.Root
+            open={ activeNoteId === id }
+            onOpenChange={ (isOpen) => isOpen ? dispatch( setActiveEntityId(id) ) : dispatch( resetActiveEntityId() ) }
             modal={ true }
-            defaultOpen={ true }
         >
             <Portal.Root
+                onClick={ (e) => e.preventDefault() }
                 className='note'
                 container={ document.querySelector(targetSelector) }
                 style={{
@@ -53,7 +56,7 @@ const Note = ({ note }) => {
 
                             return (
                                 <Comment
-                                    key={id}
+                                    key={ id }
                                     commentDetails={ comment }
                                 />
                             );
