@@ -38,8 +38,8 @@ const Page = ({ children }) => {
                         {
                             pendingNote && 
                                 <CreateNoteForm
-                                pendingNote={ pendingNote }
-                                setPendingNote={ setPendingNote }
+                                    pendingNote={ pendingNote }
+                                    setPendingNote={ setPendingNote }
                                 />
                         }
                         {

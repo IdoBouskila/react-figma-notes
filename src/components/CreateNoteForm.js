@@ -29,14 +29,14 @@ const CreateNoteForm = ({ pendingNote, setPendingNote }) => {
                     style={{
                         transform: `translate3d(${
                             coords.x.size + coords.x.unit
-                        }, ${coords.y.size + coords.y.unit}, 0)`
+                        }, ${ coords.y.size + coords.y.unit }, 0)`
                     }}
                 />
             </Portal.Root>
 
             <Popover.Portal>
                 <Popover.Content    
-                    sideOffset={20}
+                    sideOffset={ 20 }
                     side='right'
                 >
                     <NoteForm onSubmit={ handleNoteSubmit } />
