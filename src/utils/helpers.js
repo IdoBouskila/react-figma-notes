@@ -14,21 +14,19 @@ export function getCoords(e, element) {
     }
 }
 
-export function isPinableElement(target) {
-    const targetElementType = target.tagName.toLowerCase();
+export function getNotableElement(target) {
+    let element = target;
 
     const voidElements = ['area', 'base', 'br', 'col', 'hr', 'input', 'svg', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
     const replacedElements = ['audio', 'canvas', 'embed', 'iframe', 'img', 'math', 'object', 'picture', 'video'];
 
     const elementBlacklist = [...voidElements, ...replacedElements];
     
-    const isSvgChild = target.closest('svg');
-
-    if(elementBlacklist.includes(targetElementType) || isSvgChild) {
-        return false;
+    while(elementBlacklist.includes(element.tagName.toLowerCase()) || element.closest('svg')) {
+        element = element.parentElement;
     }
 
-    return true;
+    return element;
 }
 
 export function formatRelativeTime(date) {

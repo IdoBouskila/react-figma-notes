@@ -4,7 +4,7 @@ import unique from 'unique-selector';
 import { useSelector } from 'react-redux';
 import CreateNoteForm from './CreateNoteForm';
 import { selectIsNotMode, selectNotes } from '../redux/notesSettings';
-import { getCoords, isPinableElement } from '../utils/helpers';
+import { getCoords, getNotableElement } from '../utils/helpers';
 
 const Page = ({ children }) => {
     const [pendingNote, setPendingNote] = useState(null);
@@ -14,7 +14,7 @@ const Page = ({ children }) => {
     const handlePageClick = (e) => {
         e.preventDefault();
 
-        const element = isPinableElement(e.target) ? e.target : e.target.parentElement;
+        const element = getNotableElement(e.target);
         const elementUniqueSelector = unique(element);
 
         setPendingNote({
