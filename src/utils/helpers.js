@@ -32,7 +32,7 @@ export function isPinableElement(target) {
 }
 
 export function formatRelativeTime(date) {
-    const formatter = new Intl.RelativeTimeFormat(undefined, {
+    const formatter = new Intl.RelativeTimeFormat('en', {
         numeric: 'auto'
     });
 
