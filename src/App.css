@@ -1,5 +1,8 @@
 :root {
   --max-int: 2147483647;
+  --color-active-btn: #0d99ff;
+  --color-disabled-btn: #d9d9d9;
+  --color-light-gray: #f5f5f5;
 }
 
 * {
@@ -137,12 +140,12 @@ header label {
 .note-pin:hover::before {
   scale: 1.2;
   box-shadow: rgba(0, 0, 0, 0.5) 0 2px 5px,
-                0 0 0 2px #0d99ff;
+                0 0 0 2px var(--color-active-btn);
 }
               
 .note-pin.pin[data-state="open"]::before {
     box-shadow: rgba(0, 0, 0, 0.5) 0 2px 5px,
-                0 0 0 2px #0d99ff;           
+                0 0 0 2px var(--color-active-btn);           
 }
 
 .note-pin::after {
@@ -157,7 +160,7 @@ header label {
 }
 
 .create-note-form.pin::before {
-  background: #0d99ff;
+  background: var(--color-active-btn);
 }
 
 form {
@@ -186,17 +189,17 @@ form button {
   height: 1.65em;
   border: none;
   border-radius: 50%;
-  background: #d9d9d9;
+  background: var(--color-disabled-btn);
   cursor: pointer;
   transition: background .2s ease-in;
 }
 
 form button.active {
-  background: #0d99ff;
+  background: var(--color-active-btn);
 }
 
 form button:hover, .note-container .comment form button.cancel-button:hover {
-  background: #0d99ff; 
+  background: var(--color-active-btn); 
 }
 
 .note-container .comment form button:hover {
@@ -204,7 +207,7 @@ form button:hover, .note-container .comment form button.cancel-button:hover {
 }
 
 .note-container .comment form button.cancel-button {
-  background: #d9d9d9;
+  background: var(--color-disabled-btn);
 }
 
 form button > svg {
@@ -297,7 +300,7 @@ div[data-radix-popper-content-wrapper] {
   display: flex;
   gap: 5px;
   padding: 0 var(--form-vertical-space);
-  border: 1px solid #0d99ff;
+  border: 1px solid var(--color-active-btn);
   border-radius: 6px;
 }
 
@@ -317,7 +320,7 @@ div[data-radix-popper-content-wrapper] {
   height: 0.9em;
   padding: 0.3em;
   border-radius: 50%;
-  background-color: #0d99ff;
+  background-color: var(--color-active-btn);
 }
 
 .note-container .comment form button > svg {
@@ -327,7 +330,7 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .note-container form input {
-  background: #f5f5f5;
+  background: var(--color-light-gray);
   box-shadow: none;
 }
 
@@ -345,11 +348,11 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .note-icons-btn:hover {
-  background: #f5f5f5;
+  background: var(--color-light-gray);
 }
 
 .edit-button[data-state="open"] {
-  background-color: #0d99ff;
+  background-color: var(--color-active-btn);
 }
 
 .edit-button[data-state="open"] svg {
@@ -357,7 +360,7 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .edit-button[data-state="closed"]:hover {
-  background: #f5f5f5;
+  background: var(--color-light-gray);
 }
 
 .edit-content {
@@ -389,7 +392,7 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .drop-down-item:hover {
-  background: #0d99ff;
+  background: var(--color-active-btn);
 }
 
 
