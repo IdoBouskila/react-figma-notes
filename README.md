@@ -33,4 +33,4 @@ To use this app, follow these steps:
 4. Open the app in your web browser at `http://localhost:3000`
 
 ## Usage
-Once you have installed the application and started the server and client, the application will be available in your browser at http://localhost:3000.
+Once you have installed the application, the application will be available in your browser at http://localhost:3000.
